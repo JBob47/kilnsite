@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block title %}<title>List of Events</title>>{% endblock %}
+{% block content %}
+<h1>Upcomming Events</h1>
+<button type="button" class="btn btn-primary">Add Event</button>
+<hr>
+{% for event in event_list %}
+  <a href="{{ event.get_absolute_url }}"><h3>{{ event.season }}: {{ event.year }}</h3></a>
+  <hr>
+{% endfor %}
+
+{% endblock %}
+
+
+    

@@ -1,0 +1,94 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>{{ event.season }} Kiln: {{ event.year }}</h1>
+	<hr>
+
+      {% for day in event.day_set.all %}
+      
+      <ul>
+        <h2><strong>{{ day.name }}</strong></h2>
+        <li>{{ day.description }}</li>
+        <li>{{ day.date }}</li>
+        <li>{{ day.time }}</li>
+        <li>{{ day.location }}</li>
+        <hr>
+
+        <strong>Activities</strong>
+
+            {% for activityinstance in day.activityinstance_set.all %}
+              
+              <ul>
+              <li><strong>{{ activityinstance.activity }}</strong></li>
+                  
+                  {% for obj in activityinstance.repstandard_set.all %}
+                    {% if obj %}
+                      
+                      <ul>
+                        <strong>Rep Standard</strong>
+                        <li>Hardened {{ obj.RepStdHard }}</li>
+                        <li>Warrior {{ obj.RepStdWarrior }}</li>
+                        <li>Elite {{ obj.RepStdElite }}</li>
+                      </ul>
+                      
+                    {% endif %}
+                  {% endfor %}
+
+
+
+                  {% for obj in activityinstance.distance_set.all %}
+                    {% if obj %}
+                      
+                      <ul>
+                        <strong>Distance Standard</strong>
+                        <li>{{ obj.distance }} {{ obj.unit }}</li>
+                      </ul>
+                      
+                    {% endif %}
+                  {% endfor %}
+
+
+
+                  {% for obj in activityinstance.timelimit_set.all %}
+                    {% if obj %}
+                      
+                      <ul>
+                        <strong>TimeLimit</strong>
+                        {% if obj.time_limit_all %}
+                        <li>{{ obj.time_limit_all }} {{ obj.units_all }}</li>
+                        {% endif %}
+
+                        {% if obj.time_limit_hard %}
+                        <li>Hardened {{ obj.time_limit_hard }} {{ obj.units_all }}</li>
+                        {% endif %}
+
+                        {% if obj.time_limit_warrior %}
+                        <li>Warripr{{ obj.time_limit_warrior }} {{ obj.units_all }}</li>
+                        {% endif %}
+
+                        {% if obj.time_limit_elite %}
+                        <li>Elite{{ obj.time_limit_elite }} {{ obj.units_all }}</li>
+                        {% endif %}
+                        
+                      </ul>
+
+                    {% endif %}
+                  {% endfor %}
+              
+
+
+              </ul>
+
+            {% endfor %}
+      
+
+      </ul>
+
+      
+
+      <hr>
+      {% endfor %}
+      <p>Previous Visit Count: {{ num_visits }}</p>
+
+      {% endblock %}
